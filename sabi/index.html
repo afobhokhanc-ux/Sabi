@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Sabi</title>
+  <meta name="description" content="Search any local service and book it, or list your own service and get requests. Sign in as a customer or a provider.">
+  <meta name="theme-color" content="#1D2E78">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Sabi">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=DM+Mono:wght@400;500&family=Hanken+Grotesk:wght@400;500;600;700&display=swap">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="stage">
+<div class="phone no-tabs" id="phone">
+
+  <div class="shell" id="shell" inert>
+
+    <!-- Welcome -->
+    <section class="screen" id="v-welcome" aria-label="Welcome">
+      <div class="scroll welcome">
+        <div class="w-hero">
+          <svg class="logo" viewBox="0 0 96 100" aria-hidden="true"><path d="M48 84S17 58 17 36a31 31 0 0 1 62 0c0 22-31 48-31 48z" fill="#F4B81F"/><circle cx="48" cy="38" r="19" fill="#1D2E78"/><path d="M56.5 31.5C54.5 28.5 51.5 27 48 27c-5 0-8.5 2.7-8.5 6.3 0 3.8 3.6 5 8.5 6.2 4.9 1.200 8.500 2.600 8.500 6.700 0 3.800-3.600 6.800-8.500 6.800-4 0-7.300-1.800-9-4.800" fill="none" stroke="#F4B81F" stroke-width="5.5" stroke-linecap="round" transform="translate(0 0)"/><ellipse cx="48" cy="91" rx="20" ry="5" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".85"/><ellipse cx="48" cy="91" rx="34" ry="8" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".4"/></svg>
+          <h1 id="welcome-title" data-title tabindex="-1">Welcome to Sabi</h1>
+          <p>Book trusted help close to you, or get found by people who need your skills.</p>
+        </div>
+        <div class="roles" role="group" aria-label="How will you use Sabi?">
+          <button class="role" type="button" data-role="customer">
+            <span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span>
+            <span><b>I need a service</b><span class="d">Search, compare and book providers near you.</span></span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+          <button class="role" type="button" data-role="provider">
+            <span class="ic"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9l1.5-5h13L20 9"/><path d="M4 9a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0A2.7 2.7 0 0 0 20 9"/><path d="M5 12v8h14v-8"/></svg></span>
+            <span><b>I offer a service</b><span class="d">Create a listing and get booking requests.</span></span>
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <ul class="vp" aria-label="Why Sabi">
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>See prices before you book</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Distance and wait time up front</li>
+          <li><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Verified providers, reviews from finished jobs</li>
+        </ul>
+        <p class="fine center" id="welcome-note">Demo only. Accounts live in this tab and nothing is sent anywhere.</p>
+      </div>
+    </section>
+
+    <!-- Sign in -->
+    <section class="screen" id="v-auth" aria-label="Sign in" hidden>
+      <header class="appbar">
+        <button class="icon-btn" type="button" data-act="back" aria-label="Back"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="ab-title"><h1 id="auth-title" data-title tabindex="-1">Customer</h1><p id="auth-sub"></p></div>
+      </header>
+      <div class="scroll">
+        <div class="seg seg2" id="auth-mode" role="group" aria-label="Account">
+          <button type="button" data-mode="up" aria-pressed="true">Create account</button>
+          <button type="button" data-mode="in" aria-pressed="false">Sign in</button>
+        </div>
+        <p class="intro" id="auth-intro"></p>
+        <form class="form" id="auth-form" novalidate>
+          <div class="form" id="auth-fields"></div>
+          <p class="err" id="auth-err" role="alert" hidden></p>
+          <button class="btn btn-primary" type="submit" id="auth-submit">Create account</button>
+        </form>
+        <p class="fine" id="auth-note">Demo only. Any valid email and a password of 6 or more characters works. The password is not checked or stored.</p>
+      </div>
+    </section>
+
+    <!-- Provider setup -->
+    <section class="screen" id="v-onboard" aria-label="Set up your listing" hidden>
+      <header class="appbar">
+        <button class="icon-btn" type="button" id="ob-back" data-act="ob-back" aria-label="Back"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+        <div class="ab-title"><h1 id="ob-title" data-title tabindex="-1">Set up your listing</h1><p id="ob-sub"></p></div>
+      </header>
+      <div class="progress" aria-hidden="true"><span id="ob-bar"></span></div>
+      <div class="scroll" id="ob-scroll">
+        <div id="ob-head"></div>
+        <p class="err" id="ob-err" role="alert" hidden></p>
+        <div class="search" id="search-ob" hidden>
+          <label class="sr-only" for="q-ob">Search for the service you offer</label>
+          <div class="search-field search-field-sm">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q-ob" type="text" role="combobox" aria-expanded="false" aria-controls="sug-ob" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Try barber, plumber or lawyer">
+          </div>
+          <ul class="suggest" id="sug-ob" role="listbox" aria-label="Matching services" hidden></ul>
+        </div>
+        <div class="ob" id="onboard-body"></div>
+      </div>
+      <div class="actionbar">
+        <button class="btn btn-primary" type="button" id="ob-next" data-act="ob-next">Continue</button>
+      </div>
+    </section>
+
+    <!-- Provider: dashboard, requests -->
+    <section class="screen" id="v-pdash" aria-label="Dashboard" hidden>
+      <header class="appbar appbar-root">
+        <div class="brandrow">
+          <svg class="logo" viewBox="0 0 96 100" aria-hidden="true"><path d="M48 84S17 58 17 36a31 31 0 0 1 62 0c0 22-31 48-31 48z" fill="#F4B81F"/><circle cx="48" cy="38" r="19" fill="#1D2E78"/><path d="M56.5 31.5C54.5 28.5 51.5 27 48 27c-5 0-8.5 2.7-8.5 6.3 0 3.8 3.6 5 8.5 6.2 4.9 1.200 8.500 2.600 8.500 6.700 0 3.800-3.600 6.800-8.500 6.800-4 0-7.300-1.800-9-4.800" fill="none" stroke="#F4B81F" stroke-width="5.5" stroke-linecap="round" transform="translate(0 0)"/><ellipse cx="48" cy="91" rx="20" ry="5" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".85"/><ellipse cx="48" cy="91" rx="34" ry="8" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".4"/></svg>
+          <span class="wordmark">Sabi</span>
+        </div>
+        <button class="acct" type="button" data-act="acct" aria-label="Account and switch role"><span class="acct-av" data-acct-av aria-hidden="true"></span><span class="acct-role" data-acct-role></span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      </header>
+      <div class="scroll" id="pdash-body"></div>
+    </section>
+
+    <section class="screen" id="v-preq" aria-label="Requests" hidden>
+      <header class="appbar appbar-root"><h1 class="ab-large" data-title tabindex="-1">Requests</h1></header>
+      <div class="scroll" id="preq-body"></div>
+    </section>
+
+    <!-- Profile -->
+    <section class="screen" id="v-profile" aria-label="Profile" hidden>
+      <header class="appbar appbar-root"><h1 class="ab-large" data-title tabindex="-1">Profile</h1></header>
+      <div class="scroll" id="profile-body"></div>
+    </section>
+
+    <!-- Home -->
+    <section class="screen" id="v-home" aria-label="Explore" hidden>
+      <header class="appbar appbar-root">
+        <div class="brandrow">
+          <svg class="logo" viewBox="0 0 96 100" aria-hidden="true"><path d="M48 84S17 58 17 36a31 31 0 0 1 62 0c0 22-31 48-31 48z" fill="#F4B81F"/><circle cx="48" cy="38" r="19" fill="#1D2E78"/><path d="M56.5 31.5C54.5 28.5 51.5 27 48 27c-5 0-8.5 2.7-8.5 6.3 0 3.8 3.6 5 8.5 6.2 4.9 1.200 8.500 2.600 8.500 6.700 0 3.800-3.600 6.800-8.500 6.800-4 0-7.300-1.800-9-4.800" fill="none" stroke="#F4B81F" stroke-width="5.5" stroke-linecap="round" transform="translate(0 0)"/><ellipse cx="48" cy="91" rx="20" ry="5" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".85"/><ellipse cx="48" cy="91" rx="34" ry="8" fill="none" stroke="#F4B81F" stroke-width="2.5" opacity=".4"/></svg>
+          <span class="wordmark">Sabi</span>
+        </div>
+        <button class="acct" type="button" data-act="acct" aria-label="Account and switch role"><span class="acct-av" data-acct-av aria-hidden="true"></span><span class="acct-role" data-acct-role></span><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+      </header>
+      <div class="scroll">
+        <div>
+          <h1 class="hello" id="home-title" data-title tabindex="-1">What do you need today?</h1>
+          <button class="loc-btn" type="button" data-act="loc" aria-haspopup="dialog">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+            <b id="loc-label">Ikeja, Lagos</b><span id="loc-how">sample location</span>
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+        </div>
+
+        <div class="search" id="search-home">
+          <label class="sr-only" for="q-home">Search for a service</label>
+          <div class="search-field">
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q-home" type="text" role="combobox" aria-expanded="false" aria-controls="sug-home" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Try plumber, braids or lawyer">
+            <button class="go" type="button" data-go="home" aria-label="Search">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </button>
+          </div>
+          <ul class="suggest" id="sug-home" role="listbox" aria-label="Matching services" hidden></ul>
+        </div>
+
+        <div>
+          <div class="sec-h"><h2 id="pop-h">Popular</h2></div>
+          <div class="hscroll" id="popular" role="group" aria-labelledby="pop-h"></div>
+        </div>
+
+        <div>
+          <div class="sec-h"><h2 id="now-h">Need it now?</h2></div>
+          <div class="hscroll" id="nowrow" role="group" aria-labelledby="now-h"></div>
+        </div>
+
+        <div>
+          <div class="sec-h"><h2>Categories</h2></div>
+          <div class="cats" id="cats" style="margin-top:10px"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group -->
+    <section class="screen" id="v-group" aria-label="Services" hidden>
+      <header class="appbar">
+        <button class="icon-btn" type="button" data-act="back" aria-label="Back">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="ab-title"><h1 id="group-title" data-title tabindex="-1">Services</h1><p id="group-sub"></p></div>
+      </header>
+      <div class="scroll"><div class="rows" id="group-list"></div></div>
+    </section>
+
+    <!-- Searching -->
+    <section class="screen" id="v-search" aria-label="Searching" hidden>
+      <div class="scan">
+        <div class="pulse" aria-hidden="true">
+          <span></span><span></span><span></span>
+          <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </div>
+        <h1 id="scan-title" data-title tabindex="-1">Searching</h1>
+        <p id="scan-sub" aria-live="polite">Checking your location.</p>
+      </div>
+    </section>
+
+    <!-- Results -->
+    <section class="screen" id="v-results" aria-label="Results near you" hidden>
+      <header class="appbar">
+        <button class="icon-btn" type="button" data-act="back" aria-label="Back">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="ab-title"><h1 id="count" data-title tabindex="-1">Service</h1><p id="count-sub">Providers within 5 km</p></div>
+        <button class="icon-btn" type="button" data-act="info" aria-label="How listings work">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.2"/></svg>
+        </button>
+      </header>
+      <div class="scroll">
+        <div class="search" id="search-res">
+          <label class="sr-only" for="q-res">Search for another service</label>
+          <div class="search-field search-field-sm">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+            <input id="q-res" type="text" role="combobox" aria-expanded="false" aria-controls="sug-res" aria-autocomplete="list" autocomplete="off" autocapitalize="off" spellcheck="false" enterkeyhint="search" placeholder="Search for another service">
+          </div>
+          <ul class="suggest" id="sug-res" role="listbox" aria-label="Matching services" hidden></ul>
+        </div>
+
+        <div class="rowbar">
+          <div class="seg seg-3" id="rview" role="group" aria-label="Show results as">
+            <button type="button" data-rview="list" aria-pressed="true">List</button>
+            <button type="button" data-rview="scale" aria-pressed="false">Distance</button>
+            <button type="button" data-rview="map" aria-pressed="false">Map</button>
+          </div>
+          <button class="btn btn-ghost btn-sm" type="button" data-act="quote-new">Get quotes</button>
+        </div>
+
+        <div class="chiprow" role="group" aria-label="Sort and filter results">
+          <button class="chip" type="button" data-sort="near" aria-pressed="true">Nearest</button>
+          <button class="chip" type="button" data-sort="top" aria-pressed="false">Top rated</button>
+          <button class="chip" type="button" data-sort="fast" aria-pressed="false">Fastest</button>
+          <button class="chip" type="button" data-sort="cheap" aria-pressed="false">Cheapest</button>
+          <span class="sep" aria-hidden="true"></span>
+          <button class="chip" type="button" data-f="open" aria-pressed="false">Open now</button>
+          <button class="chip" type="button" data-f="verified" aria-pressed="false">Verified</button>
+          <button class="chip" type="button" data-f="free" aria-pressed="false">Free now</button>
+          <button class="chip" type="button" data-f="top" aria-pressed="false">Rated 4.5+</button>
+          <button class="chip" type="button" data-f="express" aria-pressed="false">Special options</button>
+        </div>
+
+        <div class="panel" id="mapwrap" hidden>
+          <div id="map" role="application" aria-label="Map of providers near you"></div>
+          <p class="fine" id="map-note" hidden>The map background could not load here, so only the pins show. The list below still works.</p>
+        </div>
+
+        <div class="panel" id="tape-panel">
+          <div class="panel-head">
+            <span>Distance from you</span>
+            <span class="legend"><span><i class="l-open"></i>Open</span><span><i class="l-closed"></i>Closed</span></span>
+          </div>
+          <div id="tape"></div>
+        </div>
+
+        <div class="list" id="list"></div>
+      </div>
+    </section>
+
+    <!-- Detail -->
+    <section class="screen" id="v-detail" aria-label="Details" hidden>
+      <header class="appbar">
+        <button class="icon-btn" type="button" data-act="back" aria-label="Back">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+        </button>
+        <div class="ab-title"></div>
+        <button class="icon-btn" type="button" id="save-btn" data-act="save" aria-pressed="false" aria-label="Save"></button>
+      </header>
+      <div class="scroll" id="detail-body"></div>
+      <div class="actionbar">
+        <div class="ab-price"><small>From</small><b id="detail-price"></b></div>
+        <button class="btn btn-primary" type="button" id="book-btn" data-act="book">Book now</button>
+      </div>
+    </section>
+
+    <!-- Bookings -->
+    <section class="screen" id="v-bookings" aria-label="Bookings" hidden>
+      <header class="appbar appbar-root"><h1 class="ab-large" data-title tabindex="-1">Bookings</h1></header>
+      <div class="scroll" id="bookings-body"></div>
+    </section>
+
+    <!-- Saved -->
+    <section class="screen" id="v-saved" aria-label="Saved" hidden>
+      <header class="appbar appbar-root"><h1 class="ab-large" data-title tabindex="-1">Saved</h1></header>
+      <div class="scroll" id="saved-body"></div>
+    </section>
+
+    <nav class="tabbar" id="tabbar" aria-label="Main"></nav>
+
+    <div class="scrim" id="scrim" hidden></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" hidden></div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <!-- Opening animation -->
+  <div class="splash" id="splash" aria-hidden="true">
+    <div class="splash-core">
+      <div class="mark-wrap">
+        <span class="ring"></span><span class="ring"></span><span class="ring"></span>
+        <svg class="mark" viewBox="0 0 96 100"><path d="M48 84S17 58 17 36a31 31 0 0 1 62 0c0 22-31 48-31 48z" fill="#F4B81F"/><circle cx="48" cy="38" r="19" fill="#1D2E78"/><path d="M56.5 31.5C54.5 28.5 51.5 27 48 27c-5 0-8.5 2.7-8.5 6.3 0 3.8 3.6 5 8.5 6.2 4.9 1.200 8.500 2.600 8.500 6.700 0 3.800-3.600 6.800-8.500 6.800-4 0-7.300-1.800-9-4.800" fill="none" stroke="#F4B81F" stroke-width="5.5" stroke-linecap="round" transform="translate(0 0)"/></svg>
+      </div>
+      <div class="word"><span>S</span><span>a</span><span>b</span><span>i</span></div>
+      <p class="tag">Find who sabi, near you</p>
+    </div>
+  </div>
+
+</div>
+</div>
+
+  <script src="js/data.js"></script>
+  <script src="js/questions.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.0/dist/umd/supabase.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/qr.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

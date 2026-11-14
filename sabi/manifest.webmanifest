@@ -1,0 +1,13 @@
+{
+  "name": "Sabi",
+  "short_name": "Sabi",
+  "description": "Find trusted local help close to you. Compare rating, price, distance and speed, then book.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1D2E78",
+  "theme_color": "#1D2E78",
+  "icons": [
+    {"src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"}
+  ]
+}
